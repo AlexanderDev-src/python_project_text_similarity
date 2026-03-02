@@ -8,358 +8,82 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;600&family=Inter:wght@300;400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <style>
-        :root {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --accent: #3b82f6;
-            --accent-hover: #2563eb;
-            --border: #334155;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', 'IBM Plex Sans Thai', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #60a5fa, #a78bfa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        h1 span {
-            /* Fallback for icon */
-            font-size: 2rem;
-            margin-right: 0.5rem;
-            -webkit-text-fill-color: initial;
-        }
-
-        p.subtitle {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .main-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        .input-card {
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .input-card:hover {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-header h3 {
-            font-size: 1.25rem;
-            font-weight: 500;
-        }
-
-        textarea {
-            width: 100%;
-            height: 250px;
-            background-color: #020617;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1rem;
-            color: var(--text-primary);
-            font-family: inherit;
-            resize: vertical;
-            outline: none;
-            transition: border-color 0.2s;
-            line-height: 1.6;
-        }
-
-        textarea:focus {
-            border-color: var(--accent);
-        }
-
-        .file-upload-wrapper {
-            position: relative;
-        }
-
-        .file-upload-btn {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            border: 1px dashed var(--border);
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            text-align: center;
-            transition: all 0.2s;
-        }
-
-        .file-upload-btn:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-            background-color: rgba(59, 130, 246, 0.05);
-            /* very light blue tint */
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .actions {
-            margin-top: 3rem;
-            text-align: center;
-        }
-
-        .check-btn {
-            background-color: var(--accent);
-            color: white;
-            padding: 1rem 3rem;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.25rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-        }
-
-        .check-btn:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-
-        .check-btn:active {
-            transform: translateY(0);
-        }
-
-        #result {
-            margin-top: 2rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-            text-align: center;
-            padding: 1.5rem;
-            border-radius: 12px;
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease-out;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        #result.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .text-success {
-            color: var(--success);
-        }
-
-        .text-warning {
-            color: var(--warning);
-        }
-
-        .text-danger {
-            color: var(--danger);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
     <div class="container">
-        <header>
-            <h1><span>🔍</span>Plagiarism Checker</h1>
-            <p class="subtitle">Minimalist tool to compare Text Similarity</p>
+
+        <header class="site-header">
+            <h1 class="site-title">
+                <span class="site-title-icon">✦</span>
+                Text Similarity Checker
+            </h1>
         </header>
 
-        <div class="main-grid">
-            <div class="input-card">
-                <div class="card-header">
-                    <h3>Document 1</h3>
-                    <label for="file1" class="file-upload-btn">
-                        📂 Upload PDF
-                    </label>
-                    <input type="file" id="file1" accept=".pdf">
+        <section class="config-section">
+            <div class="api-key-wrapper">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                    <label for="api_key" class="api-key-label" style="margin-bottom: 0;">🔑 MinerU API Key</label>
+                    <a href="https://mineru.net" target="_blank" class="get-api-link">Get API Key &rarr;</a>
                 </div>
-                <textarea id="text1" placeholder="Paste text here or upload a PDF..."></textarea>
+                <!-- Use type="password" to hide the key, but we'll also use JS to store it in memory -->
+                <input type="password" id="api_key" class="api-key-input"
+                    placeholder="Enter your MinerU API Key securely...">
+            </div>
+        </section>
+
+        <main class="split-layout">
+            <!-- Document 1 -->
+            <div class="doc-card">
+                <div class="doc-header">
+                    <h3 class="doc-title">Document 1</h3>
+                    <div class="fetch-controls">
+                        <input type="text" id="url1" class="url-input"
+                            placeholder="Enter PDF URL (e.g. Google Drive Link)">
+                        <button id="fetch1" class="btn-fetch">Fetch Details</button>
+                    </div>
+                </div>
+                <textarea id="text1" class="doc-textarea"
+                    placeholder="Paste text here or fetch from URL to generate text..."></textarea>
             </div>
 
-            <div class="input-card">
-                <div class="card-header">
-                    <h3>Document 2</h3>
-                    <label for="file2" class="file-upload-btn">
-                        📂 Upload PDF
-                    </label>
-                    <input type="file" id="file2" accept=".pdf">
+            <!-- Document 2 -->
+            <div class="doc-card">
+                <div class="doc-header">
+                    <h3 class="doc-title">Document 2</h3>
+                    <div class="fetch-controls">
+                        <input type="text" id="url2" class="url-input"
+                            placeholder="Enter PDF URL (e.g. Google Drive Link)">
+                        <button id="fetch2" class="btn-fetch">Fetch Details</button>
+                    </div>
                 </div>
-                <textarea id="text2" placeholder="Paste text here or upload a PDF..."></textarea>
+                <textarea id="text2" class="doc-textarea"
+                    placeholder="Paste text here or fetch from URL to generate text..."></textarea>
             </div>
+        </main>
+
+        <section class="action-area">
+            <button id="analyzeBtn" class="btn-analyze">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+                Analyze Similarity
+            </button>
+        </section>
+
+        <div id="result" class="result-card">
+            <!-- Result content injected via JS -->
         </div>
 
-        <div class="actions">
-            <button class="check-btn" onclick="checkPlagiarism()">⚡ Analyze Similarity</button>
-        </div>
-
-        <div id="result">
-            Ready to analyze
-        </div>
     </div>
 
-    <script>
-        async function checkPlagiarism() {
-            const t1 = document.getElementById('text1').value;
-            const t2 = document.getElementById('text2').value;
-            const resultBox = document.getElementById('result');
-
-            if (!t1 || !t2) {
-                // Shake animation or simple alert
-                alert("Please provide content for both documents.");
-                return;
-            }
-
-            resultBox.innerHTML = '<span style="color: var(--text-secondary)">Running analysis...</span>';
-            resultBox.classList.add('show');
-
-            const formData = new FormData();
-            formData.append('text1', t1);
-            formData.append('text2', t2);
-
-            try {
-                const response = await fetch('/analyze', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const data = await response.json();
-
-                if (data.similarity !== undefined) {
-                    const score = data.similarity.toFixed(2);
-                    let colorClass = 'text-success';
-                    let message = 'Low Similarity';
-
-                    if (score > 50) {
-                        colorClass = 'text-danger';
-                        message = 'High Similarity';
-                    } else if (score > 20) {
-                        colorClass = 'text-warning';
-                        message = 'Moderate Similarity';
-                    }
-
-                    resultBox.innerHTML = `Similarity Score: <span class="${colorClass}">${score}%</span><br><span style="font-size: 1rem; color: var(--text-secondary)">${message}</span>`;
-
-                } else {
-                    resultBox.innerText = "Error: " + (data.message || "Unknown error");
-                    resultBox.style.color = "var(--danger)";
-                }
-
-            } catch (error) {
-                console.error('Error:', error);
-                resultBox.innerText = "Connection Error";
-                resultBox.style.color = "var(--danger)";
-            }
-        }
-
-        async function handleFileUpload(fileInputId, textAreaId) {
-            const fileInput = document.getElementById(fileInputId);
-            const textArea = document.getElementById(textAreaId);
-            // Label is the previous element sibling in my new DOM structure? 
-            // Actually the label has the 'for' attribute, so clicking it triggers the input.
-            // But let's add visual feedback to the label if we can.
-
-            fileInput.addEventListener('change', async function () {
-                if (this.files && this.files[0]) {
-                    const file = this.files[0];
-                    const formData = new FormData();
-                    formData.append('file', file);
-
-                    const originalPlaceholder = textArea.placeholder;
-                    textArea.placeholder = "Extracting text from PDF...";
-                    textArea.value = ""; // Clear current text
-
-                    try {
-                        const response = await fetch('/extract_text', {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        const data = await response.json();
-
-                        if (data.text) {
-                            textArea.value = data.text;
-                            this.value = ''; // Auto-clear input to allow re-uploading same file if needed
-                        } else {
-                            textArea.value = "Error extracting text: " + (data.error || "Unknown error");
-                        }
-                    } catch (error) {
-                        console.error('Error:', error);
-                        textArea.value = "Error extracting text.";
-                    }
-                    textArea.placeholder = originalPlaceholder;
-                }
-            });
-        }
-
-        handleFileUpload('file1', 'text1');
-        handleFileUpload('file2', 'text2');
-
-        // Initial show of result box just to verify layout, then hide
-        document.getElementById('result').classList.remove('show');
-    </script>
+    <!-- Inject separated JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>
